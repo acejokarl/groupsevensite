@@ -1,0 +1,84 @@
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Edit User{% endblock 'title' %}
+
+{% block 'content' %}
+{% include "include/Sidebar.html" %}
+{% include "include/ToastMessage.html" %}
+
+<div class="p-4 sm:ml-64 mt-16">
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow-sm">
+    <h2 class="text-xl font-semibold mb-4">Edit User</h2>
+    <form method="POST" action="/user/edit/{{ user.user_id }}">
+
+      {% csrf_token %}
+
+      <!-- Full Name -->
+      <div class="mb-4">
+        <label for="full_name" class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
+        <input type="text" name="full_name" id="full_name" value="{{ user.full_name }}"
+               class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+
+      <!-- Gender -->
+      <div class="mb-4">
+        <label for="gender" class="block mb-1 text-sm font-medium text-gray-700">Gender</label>
+        <select name="gender" id="gender"
+                class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            {% for gender in genders %}
+                <option value="{{ gender.gender_id }}" {% if gender.gender_id == user.gender.gender_id %}selected{% endif %}>
+                    {{ gender.gender }}
+                </option>
+            {% endfor %}
+        </select>
+      </div>
+
+      <!-- Birth Date -->
+      <div class="mb-4">
+        <label for="birth_date" class="block mb-1 text-sm font-medium text-gray-700">Birth Date</label>
+        <input type="date" name="birth_date" id="birth_date" value="{{ user.birth_date|date:'Y-m-d' }}"
+               class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+
+      <!-- Address -->
+      <div class="mb-4">
+        <label for="address" class="block mb-1 text-sm font-medium text-gray-700">Address</label>
+        <input type="text" name="address" id="address" value="{{ user.address }}"
+               class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+
+      <!-- Contact Number -->
+      <div class="mb-4">
+        <label for="contact_number" class="block mb-1 text-sm font-medium text-gray-700">Contact Number</label>
+        <input type="text" name="contact_number" id="contact_number" value="{{ user.contact_number }}"
+               class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="block mb-1 text-sm font-medium text-gray-700">Email</label>
+        <input type="email" name="email" id="email" value="{{ user.email }}"
+               class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+
+      <!-- Username -->
+      <div class="mb-6">
+        <label for="username" class="block mb-1 text-sm font-medium text-gray-700">Username</label>
+        <input type="text" name="username" id="username" value="{{ user.username }}"
+               class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <p>User ID is: {{ user.user_id }}</p>
+
+
+      <div class="flex justify-end">
+        <a href="/user/list/" class="bg-white text-sm font-medium font-black px-3 py-2.5 mr-1 rounded-sm shadow-sm hover:bg-gray-100 hover:outline-none">Back</a>
+        <button type="submit"
+                class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded shadow-sm">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock 'content' %}

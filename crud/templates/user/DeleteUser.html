@@ -1,0 +1,20 @@
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Delete User{% endblock 'title' %}
+
+{% block 'content' %}
+<div class="p-4 sm:ml-64 mt-16">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded shadow-sm">
+    <h2 class="text-xl font-semibold mb-4 text-red-600">Delete Confirmation</h2>
+    <p>Are you sure you want to delete <strong>{{ user.full_name }}</strong>?</p>
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="flex justify-end mt-6">
+        <a href="/user/list/" class ="bg-white text-sm font-medium font-black px-3 py-2.5 mr-1 rounded-sm shadow-sm cursor-pointer hover:bg-gray-100 hover:outline-none">Back</a>
+        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock 'content' %}

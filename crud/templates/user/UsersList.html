@@ -8,44 +8,128 @@ Users List
 {% include 'include/Sidebar.html' %}
 {% include "include/ToastMessage.html" %}
 
-<div class="p-2 sm:ml-64 md:mt-14">
-    <div class="relative overflow-x-auto rounded-sm shadow-sm">
-        <table class="w-full">
-            <thead class="text-xs text-left text-white bg-blue-600">
-                <tr>
-                    <th class="px-6 py-3">Full Name</th>
-                    <th class="px-6 py-3">Gender</th>
-                    <th class="px-6 py-3">Birth Date</th>
-                    <th class="px-6 py-3">Address</th>
-                    <th class="px-6 py-3">Contact Number</th>
-                    <th class="px-6 py-3">Email</th>
-                    <th class="px-6 py-3">Action</th>
-                </tr>
-            </thead>
-            <tbody class="text-xs text-black">
-                {% for user in users %}
-                <tr class="hover:bg-gray-100 border-b border-gray-200">
-                    <td class="px-6 py-3">{{ user.full_name }}</td>
-                    <td class="px-6 py-3">{{ user.gender.gender }}</td>
-                    <td class="px-6 py-3">{{ user.birth_date }}</td>
-                    <td class="px-6 py-3">{{ user.address }}</td>
-                    <td class="px-6 py-3">{{ user.contact_number }}</td>
-                    <td class="px-6 py-3">{{ user.email }}</td>
-                    <td class="px-6 py-3">
-                        <div class="inline-flex shadow-sm">
-                            <a href="#" class="bg-green-600 px-3 py-2.5 font-medium text-sm text-white rounded-s-sm hover:bg-green-700 hover:outline-none">
-                                Edit
-                            </a>
-                            <a href="#" class="bg-red-600 px-3 py-2.5 font-medium text-sm text-white rounded-e-sm hover:bg-red-700 hover:outline-none">
-                                Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<div class="p-2 sm:ml-64 md:mt-14 max-w-7xl mx-auto">
+
+  <!-- Search input -->
+  <div class="mb-4">
+    <input
+      id="search-input"
+      type="text"
+      placeholder="Search users..."
+      class="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <!-- Table wrapper with horizontal scroll on small devices -->
+  <div class="relative overflow-x-auto rounded-sm shadow-sm">
+    <table class="w-full min-w-[700px] sm:min-w-full table-auto">
+      <thead class="text-xs sm:text-sm text-left text-white bg-blue-600">
+        <tr>
+          <th class="px-4 sm:px-6 py-3">Full Name</th>
+          <th class="px-4 sm:px-6 py-3 hidden sm:table-cell">Gender</th>
+          <th class="px-4 sm:px-6 py-3 hidden md:table-cell">Birth Date</th>
+          <th class="px-4 sm:px-6 py-3 hidden lg:table-cell">Address</th>
+          <th class="px-4 sm:px-6 py-3 hidden lg:table-cell">Contact Number</th>
+          <th class="px-4 sm:px-6 py-3 hidden xl:table-cell">Email</th>
+          <th class="px-4 sm:px-6 py-3">Action</th>
+        </tr>
+      </thead>
+      <tbody id="user-rows" class="text-xs sm:text-sm text-black">
+        {% for user in users %}
+        <tr class="hover:bg-gray-100 border-b border-gray-200">
+          <td class="px-4 sm:px-6 py-2">{{ user.full_name }}</td>
+          <td class="px-4 sm:px-6 py-2 hidden sm:table-cell">{{ user.gender.gender }}</td>
+          <td class="px-4 sm:px-6 py-2 hidden md:table-cell">{{ user.birth_date }}</td>
+          <td class="px-4 sm:px-6 py-2 hidden lg:table-cell">{{ user.address }}</td>
+          <td class="px-4 sm:px-6 py-2 hidden lg:table-cell">{{ user.contact_number }}</td>
+          <td class="px-4 sm:px-6 py-2 hidden xl:table-cell">{{ user.email }}</td>
+          <td class="px-4 sm:px-6 py-2">
+            <div class="inline-flex flex-wrap gap-1">
+              <a href="/user/edit/{{ user.user_id }}" class="bg-green-600 px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium text-white rounded hover:bg-green-700">Edit</a>
+              <a href="/user/delete/{{ user.user_id }}" class="bg-red-600 px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium text-white rounded hover:bg-red-700">Delete</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination controls -->
+  <div class="mt-4 flex flex-col sm:flex-row justify-center sm:justify-between space-y-2 sm:space-y-0 items-center">
+    <button id="prev-btn" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50" disabled>Previous</button>
+    <span id="page-info" class="text-gray-700 font-medium"></span>
+    <button id="next-btn" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded">Next</button>
+  </div>
 </div>
+
+<script>
+(function() {
+  const rowsPerPage = 10;
+  let currentPage = 1;
+
+  const searchInput = document.getElementById('search-input');
+  const allRows = Array.from(document.querySelectorAll('#user-rows tr'));
+
+  const pageInfo = document.getElementById('page-info');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  let filteredRows = allRows;
+
+  function filterRows(query) {
+    query = query.trim().toLowerCase();
+    if (!query) return allRows;
+    return allRows.filter(row => {
+      return Array.from(row.cells).some(cell => 
+        cell.textContent.toLowerCase().includes(query)
+      );
+    });
+  }
+
+  function showPage(page) {
+    const totalRows = filteredRows.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage) || 1;
+
+    allRows.forEach(row => row.style.display = 'none');
+
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    for(let i = start; i < end && i < totalRows; i++) {
+      filteredRows[i].style.display = '';
+    }
+
+    pageInfo.textContent = `Page ${page} of ${totalPages}`;
+    prevBtn.disabled = page === 1;
+    nextBtn.disabled = page === totalPages || totalRows === 0;
+  }
+
+  searchInput.addEventListener('input', () => {
+    currentPage = 1;
+    filteredRows = filterRows(searchInput.value);
+    showPage(currentPage);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      showPage(currentPage);
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      showPage(currentPage);
+    }
+  });
+
+  showPage(currentPage);
+})();
+</script>
+
+
 
 {% endblock 'content' %}
