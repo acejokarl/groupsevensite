@@ -1,0 +1,124 @@
+{% extends 'layout/base.html' %}
+
+{% block 'title' %}
+Users List
+{% endblock 'title' %}
+
+{% block 'content' %}
+
+{% include 'include/Sidebar.html' %}
+{% include 'include/ToastMessage.html' %}
+
+<div class="p-2 sm:ml-64 mt-16 md:mt-14">
+  <div class="mb-4">
+    <form action="/user/list" class="flex gap-2" method="GET">
+      <input 
+        type="text" 
+        name="search" 
+        value="{{ search_query }}" 
+        placeholder="Search user" 
+        class="bg-white px-3 py-2 border border-[#C9BB6F] text-[#3A2E1A] text-sm rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-[#D6C96E] focus:border-[#D6C96E]"
+      >
+      <button 
+        type="submit" 
+        class="bg-[#B8A94B] hover:bg-[#D6C96E] text-white px-4 py-2 rounded-lg text-sm transition duration-200"
+      >
+        Search
+      </button>  
+      {% if search_query %}
+        <a 
+          href="/user/list" 
+          class="bg-[#8F8B45] hover:bg-[#A69F5F] text-white px-4 py-2 rounded-lg text-sm transition duration-200"
+        >
+          Clear
+        </a>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="relative overflow-x-auto rounded-lg shadow-md border border-[#D6C96E]">
+    <table class="w-full">
+      <thead class="text-xs text-left text-white bg-[#B8A94B]">
+        <tr>
+          <th class="px-6 py-3">Full Name</th>
+          <th class="px-6 py-3">Gender</th>
+          <th class="px-6 py-3">Birth Date</th>
+          <th class="px-6 py-3">Address</th>
+          <th class="px-6 py-3">Contact Number</th>
+          <th class="px-6 py-3">Email</th>
+          <th class="px-9 py-3">Action</th>
+        </tr>
+      </thead>
+      <tbody class="text-xs text-[#3A2E1A]">
+        {% for user in users %}
+        <tr class="hover:bg-[#F4F0C1] border-b border-[#D6C96E]">
+          <td class="px-6 py-3">{{ user.full_name }}</td>
+          <td class="px-6 py-3">{{ user.gender.gender }}</td>
+          <td class="px-6 py-3">{{ user.birth_date }}</td>
+          <td class="px-6 py-3">{{ user.address }}</td>
+          <td class="px-6 py-3">{{ user.contact_number }}</td>
+          <td class="px-6 py-3">{{ user.email }}</td>
+          <td class="px-6 py-3">
+            <div class="flex justify-evenly space-x-1">
+              <a href="/user/edit/{{ user.user_id }}" 
+                 class="bg-[#7C9B3F] hover:bg-[#8FAF48] text-white px-3 py-2.5 rounded-lg font-medium transition duration-200"
+              >
+                Edit
+              </a>
+              <a href="/user/delete/{{ user.user_id }}" 
+                 class="bg-[#B34747] hover:bg-[#CC5757] text-white px-3 py-2.5 rounded-lg font-medium transition duration-200"
+              >
+                Delete
+              </a>
+              <a href="/user/changepass/{{ user.user_id }}" 
+                 class="bg-[#A2B26F] hover:bg-[#C0D17E] text-white px-3 py-2.5 rounded-lg text-xs font-medium transition duration-200"
+              >
+                Change Password
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- pagination -->
+  <nav class="mt-4"> 
+    <ul class="inline-flex -space-x-px text-sm w-full justify-center">
+      {% if page_obj.has_previous %}
+      <li>
+        <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}"
+          class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-[#3A2E1A] bg-[#F4F0C1] border border-[#D6C96E] rounded-l-lg hover:bg-[#D6C96E] hover:text-white transition duration-200"
+        >Previous</a>
+      </li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <li>
+          <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}"
+            class="flex items-center justify-center px-3 h-8 text-[#7C9B3F] border border-[#D6C96E] bg-[#FDF6D3] hover:bg-[#F4F0C1] hover:text-[#6C7B30] transition duration-200"
+          >{{ num }}</a>
+        </li>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <li>
+          <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}"
+            class="flex items-center justify-center px-3 h-8 leading-tight text-[#3A2E1A] bg-white border border-[#D6C96E] hover:bg-[#F4F0C1] hover:text-[#7C9B3F] transition duration-200"
+          >{{ num }}</a>
+        </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+      <li>
+        <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-[#3A2E1A] bg-[#F4F0C1] border border-[#D6C96E] rounded-r-lg hover:bg-[#D6C96E] hover:text-white transition duration-200"
+        >Next</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+{% endblock 'content' %}

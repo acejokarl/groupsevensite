@@ -1,25 +1,25 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
-  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+<nav class="fixed top-0 z-50 w-full bg-[#F0E68C] border-b border-[#D6C96E] shadow-md rounded-b-xl">
+  <div class="px-4 py-4 lg:px-6">
     <div class="flex items-center justify-between">
-      
+
       <!-- LEFT: Sidebar Toggle and Logo -->
-      <div class="flex items-center justify-start rtl:justify-end">
+      <div class="flex items-center gap-4">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button"
-          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+          class="inline-flex items-center p-2 text-[#3A2E1A] rounded-lg sm:hidden hover:bg-[#D6C96E] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#D6C96E]">
           <span class="sr-only">Open sidebar</span>
-          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
             <path clip-rule="evenodd" fill-rule="evenodd"
               d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
             </path>
           </svg>
         </button>
-        <span class="self-center text-xl font-bold sm:text-3xl whitespace-nowrap text-gray-800">Group Seven</span>
+        <span class="text-2xl font-extrabold tracking-tight text-[#3A2E1A]">G7</span>
       </div>
 
       <!-- RIGHT: Hello and Logout -->
-      <div class="flex items-center space-x-4">
-        <span>Hello, {{ request.user }}</span>
-        <span><a href="{% url 'logout' %}">Logout</a></span>
+      <div class="flex items-center gap-4 text-[#3A2E1A]">
+        <span class="font-medium">Hello, {{ request.user }}</span>
+        <a href="{% url 'logout' %}" class="px-3 py-1 bg-white rounded-lg hover:bg-[#D6C96E] transition-colors duration-200 shadow text-sm">Logout</a>
       </div>
 
     </div>
@@ -27,26 +27,26 @@
 </nav>
 
 <!-- SIDEBAR -->
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 border-r border-gray-200 bg-white sm:translate-x-0" aria-label="Sidebar">
-  <div class="h-full px-4 py-6 overflow-y-auto bg-white">
-    <ul class="space-y-3 font-medium">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r border-[#D6C96E] bg-[#F0E68C] shadow-md rounded-tr-xl sm:translate-x-0" aria-label="Sidebar">
+  <div class="h-full px-5 py-6 overflow-y-auto">
+    <ul class="space-y-3 font-semibold text-[#3A2E1A]">
       <li>
-        <a href="/gender/list" class="flex items-center px-3 py-2 text-black rounded-md hover:bg-gray-100 transition-colors duration-200">
+        <a href="/gender/list" class="flex items-center px-3 py-2 rounded-lg hover:bg-[#D6C96E] transition duration-200">
           <span class="ml-2">Gender List</span>
         </a>
       </li>
       <li>
-        <a href="/gender/add" class="flex items-center px-3 py-2 text-black rounded-md hover:bg-gray-100 transition-colors duration-200">
+        <a href="/gender/add" class="flex items-center px-3 py-2 rounded-lg hover:bg-[#D6C96E] transition duration-200">
           <span class="ml-2">Add Gender</span>
         </a>
       </li>
       <li>
-        <a href="/user/list" class="flex items-center px-3 py-2 text-black rounded-md hover:bg-gray-100 transition-colors duration-200">
+        <a href="/user/list" class="flex items-center px-3 py-2 rounded-lg hover:bg-[#D6C96E] transition duration-200">
           <span class="ml-2">User List</span>
         </a>
       </li>
       <li>
-        <a href="/user/add" class="flex items-center px-3 py-2 text-black rounded-md hover:bg-gray-100 transition-colors duration-200">
+        <a href="/user/add" class="flex items-center px-3 py-2 rounded-lg hover:bg-[#D6C96E] transition duration-200">
           <span class="ml-2">Add User</span>
         </a>
       </li>

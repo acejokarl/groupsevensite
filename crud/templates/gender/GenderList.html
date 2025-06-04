@@ -9,24 +9,26 @@ Genders List
 {% include "include/ToastMessage.html" %}
 
 <div class="p-2 sm:ml-64 md:mt-14">
-    <div class="relative overflow-x-auto rounded-sm shadow-sm">
+    <div class="relative overflow-x-auto rounded-xl shadow-lg border border-[#D6C96E] bg-[#F9F6DC]">
         <table class="w-full">
-            <thead class="text-xs text-left text-white bg-blue-600">
+            <thead class="text-sm text-left text-white bg-[#C2B280]">
                 <tr>
                     <th class="px-6 py-3">Gender</th>
                     <th class="px-6 py-3">Action</th>
                 </tr>
             </thead>
-            <tbody class="text-xs text-black">
+            <tbody class="text-sm text-[#3A2E1A] bg-white">
                 {% for gender in genders %}
-                <tr class="hover:bg-gray-100 border-b border-gray-200">
+                <tr class="hover:bg-[#F0E68C]/50 border-b border-[#E8E2B5] transition duration-150">
                     <td class="px-6 py-3">{{ gender.gender }}</td>
                     <td class="px-6 py-3">
                         <div class="inline-flex shadow-sm">
-                            <a href="/gender/edit/{{ gender.gender_id }}" class="bg-green-600 px-3 py-2.5 font-medium text-sm text-white rounded-s-sm hover:bg-green-700 hover:outline-none">
+                            <a href="/gender/edit/{{ gender.gender_id }}"
+                                class="bg-[#C2B280] hover:bg-[#b1a469] text-[#3A2E1A] px-3 py-2.5 font-medium text-sm rounded-s-lg border border-[#A89F60]">
                                 Edit
                             </a>
-                            <a href="/gender/delete/{{ gender.gender_id }}" class="bg-red-600 px-3 py-2.5 font-medium text-sm text-white rounded-e-sm hover:bg-red-700 hover:outline-none">
+                            <a href="/gender/delete/{{ gender.gender_id }}"
+                                class="bg-[#E6C76E] hover:bg-[#d7b951] text-[#3A2E1A] px-3 py-2.5 font-medium text-sm rounded-e-lg border border-[#C4B65C]">
                                 Delete
                             </a>
                         </div>

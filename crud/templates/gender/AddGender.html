@@ -7,16 +7,20 @@
 {% include "include/ToastMessage.html" %}
 
 <div class="sm:ml-64 mt-20 px-4">
-    <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
-        <h2 class="text-xl font-semibold mb-4">Add Gender</h2>
+    <div class="max-w-md mx-auto bg-[#F0E68C] p-6 rounded-xl shadow-md border border-[#D6C96E]">
+        <h2 class="text-2xl font-bold mb-5 text-[#3A2E1A]">Add Gender</h2>
         <form action="/gender/add/" method="post">
             {% csrf_token %}
             <div class="mb-4">
-                <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-                <input type="text" name="gender" id="gender" class="w-full px-3 py-2.5 border border-gray-300 rounded-sm text-sm text-black focus:outline-none focus:ring-2 focus:ring-blue-500" name="gender" id="gender"/>
+                <label for="gender" class="block text-base font-medium text-[#3A2E1A] mb-2">Gender</label>
+                <input type="text" name="gender" id="gender"
+                    class="w-full px-4 py-2.5 border border-[#C9BB6F] rounded-lg text-[#3A2E1A] bg-white focus:outline-none focus:ring-2 focus:ring-[#D6C96E] transition duration-200" />
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2.5 rounded-sm shadow">Save Gender</button>
+                <button type="submit"
+                    class="bg-[#C2B280] hover:bg-[#b1a469] text-[#3A2E1A] font-medium text-sm px-5 py-2.5 rounded-lg shadow border border-[#A89F60] transition duration-200">
+                    Save Gender
+                </button>
             </div>
         </form>
     </div>

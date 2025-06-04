@@ -1,0 +1,69 @@
+{% extends 'layout/base.html' %}
+
+{% block 'title' %} Edit User {% endblock 'title' %}
+
+{% block 'content' %}
+
+{% include 'include/Sidebar.html' %}
+{% include 'include/ToastMessage.html' %}
+
+<div class="flex justify-center sm:ml-64 mt-20 px-4">
+  <div class="w-full max-w-md bg-[#f5f1e6] dark:bg-[#3b3a20] rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold text-[#6b5e2b] dark:text-[#d6cca3] mb-6 text-center">Change Password</h2>
+    <form action="/user/passwordchange/{{ user.user_id }}" method="post" autocomplete="off">
+      {% csrf_token %}
+      
+      <!-- Current Password -->
+      <div class="mb-5">
+        <label for="current_password" class="block mb-1 font-semibold text-[#6b5e2b] dark:text-[#d6cca3]">Enter your current password</label>
+        <input
+          type="password"
+          name="current_password" id="current_password"
+          required
+          class="w-full px-3 py-2.5 border-2 border-[#b5a76c] rounded-md text-[#3b3a20] dark:bg-[#3b3a20] dark:border-[#6b5e2b] dark:text-[#d6cca3]
+                 focus:outline-none focus:ring-2 focus:ring-[#b5a76c] focus:border-[#6b5e2b]"
+        />
+      </div>
+
+      <!-- New Password -->
+      <div class="mb-5">
+        <label for="password" class="block mb-1 font-semibold text-[#6b5e2b] dark:text-[#d6cca3]">New Password</label>
+        <input
+          type="password"
+          name="password" id="password"
+          required
+          class="w-full px-3 py-2.5 border-2 border-[#b5a76c] rounded-md text-[#3b3a20] dark:bg-[#3b3a20] dark:border-[#6b5e2b] dark:text-[#d6cca3]
+                 focus:outline-none focus:ring-2 focus:ring-[#b5a76c] focus:border-[#6b5e2b]"
+        />
+      </div>
+
+      <!-- Confirm New Password -->
+      <div class="mb-6">
+        <label for="confirm_password" class="block mb-1 font-semibold text-[#6b5e2b] dark:text-[#d6cca3]">Confirm New Password</label>
+        <input
+          type="password"
+          name="confirm_password" id="confirm_password"
+          required
+          class="w-full px-3 py-2.5 border-2 border-[#b5a76c] rounded-md text-[#3b3a20] dark:bg-[#3b3a20] dark:border-[#6b5e2b] dark:text-[#d6cca3]
+                 focus:outline-none focus:ring-2 focus:ring-[#b5a76c] focus:border-[#6b5e2b]"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-between">
+        <a href="/user/list"
+           class="px-4 py-2 rounded-md bg-[#e4dca8] text-[#6b5e2b] font-semibold shadow-sm hover:bg-[#d6cca3] dark:bg-[#5a5720] dark:text-[#d6cca3] dark:hover:bg-[#6b5e2b]">
+          Back
+        </a>
+        <button
+          type="submit"
+          class="px-4 py-2 rounded-md bg-[#b5a76c] text-[#3b3a20] font-semibold shadow-sm hover:bg-[#d6cca3] focus:outline-none focus:ring-2 focus:ring-[#b5a76c]">
+          Change Password
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock 'content' %}

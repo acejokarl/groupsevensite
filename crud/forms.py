@@ -1,5 +1,11 @@
 from django import forms
 from .models import Users, Genders
+from django.contrib.auth.forms import UserCreationForm
+
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = Users
+        fields = ['username', 'email', 'password1', 'password2']
 
 class UserRegistrationForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput)
